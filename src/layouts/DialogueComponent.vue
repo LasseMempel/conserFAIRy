@@ -1,4 +1,4 @@
-<!-- src/components/dialogueComponent.vue -->
+<!-- src/layouts/dialogueComponent.vue -->
 <template>
     <q-dialog v-model="showIntroDialog" persistent>
       <q-card style="min-width: 400px; max-width: 600px;">
@@ -44,5 +44,5 @@
 </script>
 
 <style scoped>
-/* Dialogue styles remain the same */
+
 </style>

@@ -1,4 +1,4 @@
-<!-- src/components/contactComponent.vue -->
+<!-- src/layouts/contactComponent.vue -->
 <template>
   <div class="contact-container">
     <q-btn
@@ -13,9 +13,9 @@
       class="contact-btn"
     />
     <div v-if="showEmails" class="emails-container">
-      <!-- Unified Email Display using responsive classes -->
+
       <div class="row items-center flex-center q-gutter-sm">
-        <!-- Vertical layout on mobile -->
+
         <div v-if="$q.screen.lt.sm" class="column items-center">
           <div
             v-for="email in decodedEmails"
@@ -31,7 +31,6 @@
           </div>
         </div>
 
-        <!-- Horizontal layout on desktop -->
         <div v-else class="row items-center">
           <a
             v-for="(email, index) in decodedEmails"
@@ -43,7 +42,6 @@
           </a>
         </div>
 
-        <!-- Close Button -->
         <q-btn
           icon="close"
           size="xs"
@@ -62,7 +60,7 @@
 import { ref, computed } from 'vue';
 
 const showEmails = ref(false);
-// Consider making this a prop for full reusability
+
 const obfuscatedEmails = ref([
   "7l4a9s2s1e6x3m5e8m0p4e2l7l9a1e6n3g8e5r2x9l7e4i1z6a8x2d5e9",
   "7k4r9i2s1t6i3n5a8x0f4i2s7c9h1e6r3x8l5e2i9z7a4x1d6e8",
@@ -93,7 +91,7 @@ const decodedEmails = computed(() => {
 }
 
 .contact-btn {
-  font-size: 14px; /* Adjusted base size */
+  font-size: 14px; 
 }
 
 .emails-container {
@@ -103,28 +101,27 @@ const decodedEmails = computed(() => {
 .email-link {
   text-decoration: none;
   color: white !important;
-  word-break: break-all; /* For long emails on small screens */
+  word-break: break-all; 
 }
 
 .email-link:hover {
   text-decoration: underline;
 }
 
-/* Adjust font sizes responsively */
 @media (max-width: 599px) {
   .contact-btn {
     font-size: 12px;
     padding: 4px 8px;
   }
 
-  .text-caption { /* Ensure text-caption is applied correctly */
-    font-size: 11px; /* Or rely on Quasar's class */
+  .text-caption {
+    font-size: 11px; 
   }
 }
 
 @media (min-width: 600px) {
   .text-caption {
-    font-size: 12px; /* Or rely on Quasar's class */
+    font-size: 12px; 
   }
 }
 </style>
