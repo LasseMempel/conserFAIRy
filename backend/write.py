@@ -1,4 +1,4 @@
-from pyoxigraph import *
+from pyoxigraph import Store
 
 store = Store("pyoxystore")
 

@@ -1,25 +1,25 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 class Concept(BaseModel):
 
     # URI
-    concept: str
+    concept: HttpUrl
 
     # SKOS Concept Schemes
-    inScheme: str # necessary!
-    topConceptOf: str | None = None
+    inScheme: HttpUrl  # necessary!
+    topConceptOf: HttpUrl | None = None
 
     # SKOS Mapping Properties
-    broadMatch: list[str] | None = None
-    narrowMatch: list[str] | None = None
-    relatedMatch: list[str] | None = None
-    closeMatch: list[str] | None = None
-    exactMatch: list[str] | None = None
+    broadMatch: list[HttpUrl] | None = None
+    narrowMatch: list[HttpUrl] | None = None
+    relatedMatch: list[HttpUrl] | None = None
+    closeMatch: list[HttpUrl] | None = None
+    exactMatch: list[HttpUrl] | None = None
 
     # SKOS Semantic Relations
-    broader: str | None = None
-    narrower: list[str] | None = None
-    related: list[str] | None = None
+    broader: HttpUrl | None = None
+    narrower: list[HttpUrl] | None = None
+    related: list[HttpUrl] | None = None
 
     # SKOS Lexical Labels
     prefLabel: str # necessary!
@@ -39,5 +39,5 @@ class Concept(BaseModel):
 
 class ConceptScheme(BaseModel):
     # SKOS Concept Schemes
-    conceptScheme: str # necessary!
-    hasTopConcept: list[str] | None = None
+    conceptScheme: HttpUrl # necessary!
+    hasTopConcept: list[HttpUrl] | None = None
