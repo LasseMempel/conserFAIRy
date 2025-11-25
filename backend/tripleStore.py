@@ -9,5 +9,8 @@ name = Literal('example')
 store.add(Quad(ex, schema_name, name))
 """
 
-store.flush()
-print(str(store))
+def readStore(store):
+    print(str(store))
+
+def writeStore(store):
+    store.flush()
