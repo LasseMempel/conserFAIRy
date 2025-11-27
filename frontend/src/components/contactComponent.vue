@@ -63,7 +63,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 
 const showEmails = ref(false);
@@ -75,8 +75,8 @@ const obfuscatedEmails = ref([
 
 const decodedEmails = computed(() => {
   return obfuscatedEmails.value.map(email => {
-    let decoded = email.replace(/\d/g, '');
-    let parts = decoded.split('x').filter(part => part.length > 0);
+    const decoded = email.replace(/\d/g, '');
+    const parts = decoded.split('x').filter(part => part.length > 0);
     if (parts.length >= 4) {
       const firstName = parts[0];
       const lastName = parts[1];

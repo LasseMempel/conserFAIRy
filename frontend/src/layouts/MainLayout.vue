@@ -4,38 +4,45 @@
   <q-layout view="hHh lpR fFf">
 
     <q-header elevated class="bg-primary text-secondary" >
-      <q-toolbar>
-        <q-avatar>
-          <img src="icons/FAIRification_Tool.png"/> 
-        </q-avatar>
-        <q-avatar>
-          <img src="icons/02_Blau_Claim_kurz.svg"/> 
-        </q-avatar>
-        <q-toolbar-title>
+      <q-toolbar> 
+        <q-toolbar-title class="text-h5 text-bold text-center">
+          <q-avatar size="50px">
+            <img src="/icons/app_logo.png"/>
+          </q-avatar>
           conserFAIRy
         </q-toolbar-title>
-        LEIZA Department of Scientific IT
       </q-toolbar>
-
-      <q-tabs align="left" class="text-secondary">
-        <q-route-tab to="/Introduction" label="Introduction" />
-        <q-route-tab to="/conserTABLE" label="conserTABLE" />
-        <q-route-tab to="/conserGRAPH" label="conserGRAPH" />
+      <q-tabs class="text-secondary float-left">
+        <q-route-tab to="/conserDUCTION" label="conserTABLE" no-caps/>
+        <q-route-tab to="/conserTABLE" label="conserTABLE" no-caps/>
+        <q-route-tab to="/conserGRAPH" label="conserGRAPH" no-caps/>
       </q-tabs>
+      <q-avatar class="float-right">
+        <q-btn color="accent" @click="loggingIn = !loggingIn" :label="loginButtonLabel" text-color="secondary" no-caps flat />
+      </q-avatar>
+
     </q-header>
 
     <q-page-container>
+      <q-dialog v-if="loggingIn">
+          <q-form>
+            <q-input v-model="email"> </q-input>
+            <q-input v-model="password"> </q-input>
+          </q-form>
+          <q-btn color="accent" @click="loggingIn = !loggingIn">Login</q-btn>
+      </q-dialog>
       <router-view />
     </q-page-container>
 
     <q-footer elevated class="bg-secondary text-white">
       <q-toolbar class="column">
-        <div class="row">
+        <div class="row" >
           Leibniz-Zentrum für Archäologie (LEIZA) 2025
           <q-separator color="white" vertical />
           Lasse Mempel-Länger
         </div>
-        <div class="row">
+        <div class="row no-wrap" >
+          <q-img src="/icons/02_Weiss_Claim_kurz.svg" style="max-width: 100px;" />
           <a href="https://www.leiza.de/impressum" target="_blank" class="text-white">
             Impressum
           </a>
@@ -43,6 +50,7 @@
           <a href="https://www.leiza.de/datenschutz" target="_blank" class="text-white">
             Datenschutz
           </a>
+          LEIZA Department of Scientific IT
         </div>
       </q-toolbar>
     </q-footer>
@@ -51,110 +59,19 @@
 </template>
 
 <script setup lang="ts">
+
 import ContactComponent from 'src/components/contactComponent.vue';
+import { ref, computed } from 'vue';
 
-/*
-
-  <!-- Mobile Header Content -->
-  <div class="mobile-header lt-sm full-width">
-    <div class="row items-center justify-between q-mb-sm">
-      <img src="icons/02_Blau_Claim_kurz.svg" width="80" height="60" class="q-ml-md"/>
-      <div class="text-right">
-        <div class="text-caption text-secondary">LEIZA Department of</div>
-        <div class="text-caption text-secondary">Scientific IT</div>
-      </div>
-    </div>
-    <div class="text-center">
-      <div class="text-h6 text-bold text-secondary">conserFAIRy</div>
-    </div>
-  </div>
-
-  <!-- Desktop Header Content -->
-  <div class="desktop-header gt-xs row items-center no-wrap full-width" style="justify-content: space-between;">
-    <div class="row items-center no-wrap">
-      <img src="icons/02_Blau_Claim_kurz.svg" width="100" height="75" class="q-ml-md"/>
-    </div>
-    <q-toolbar-title class="text-center">
-      <div class="column items-center">
-        <div class="text-h5 text-bold header-title text-secondary">conserFAIRy</div>
-      </div>
-    </q-toolbar-title>
-    <div class="row items-center no-wrap">
-      <span class="text-subtitle2 text-secondary">LEIZA Department of Scientific IT</span>
-    </div>
-  </div>
-
-    <!-- Mobile Footer Content -->
-<div class="mobile-footer lt-sm">
-    <div class="text-center q-mb-sm">
-      <div class="text-caption">Leibniz-Zentrum für Archäologie (LEIZA) 2025</div>
-      <div class="text-caption">Lasse Mempel-Länger</div>
-    </div>
-
-    <div class="row justify-center items-stretch q-gutter-x-md">
-      <div class="column justify-between">
-        <a href="https://www.leiza.de/impressum" target="_blank" class="text-white text-decoration-none">
-          <span class="text-caption">Impressum</span>
-        </a>
-        <a href="https://www.leiza.de/datenschutz" target="_blank" class="text-white text-decoration-none">
-          <span class="text-caption">Datenschutz</span>
-        </a>
-      </div>
-      <ContactComponent></ContactComponent>
-    </div>
-  </div>
-
-  <!-- Desktop Footer Content (your original) -->
-  <div class="desktop-footer gt-xs">
-    <div class="row justify-center">
-      <q-breadcrumbs separator="|" separator-color="white" active-color="">
-        <q-breadcrumbs-el label="Leibniz-Zentrum für Archäologie (LEIZA) 2025" />
-        <q-breadcrumbs-el label="Lasse Mempel-Länger" />
-      </q-breadcrumbs>
-    </div>
-    <div class="row justify-center">
-      <q-breadcrumbs separator="" separator-color="secondary" active-color="">
-        <a href="https://www.leiza.de/impressum" target="_blank" style="">
-          <q-breadcrumbs-el label="Impressum" class="text-white"/>
-        </a>
-        <ContactComponent></ContactComponent>
-        <a href="https://www.leiza.de/datenschutz" target="_blank" style="">
-          <q-breadcrumbs-el label="Datenschutz" class="text-white"/>
-        </a>
-      </q-breadcrumbs>
-    </div>
-  </div>
-
-*/
-
-
-
-
+const toLogIn = ref(true);
+const loggingIn = ref(false);
+const email = ref('');
+const password = ref('');
+const loginButtonLabel = computed(() => (toLogIn.value ? 'Login' : 'Logout'));
 
 </script>
 
 <style scoped>
-.header-title {
-font-size: 2rem;
-letter-spacing: 0.05em;
-}
-.header-subtitle {
-font-size: 1.1rem;
-opacity: 0.8;
-}
-.mobile-header {
-  padding: 8px 0;
-}
 
-.mobile-footer {
-  text-align: center;
-}
-
-@media (max-width: 599px) {
-  .q-toolbar {
-    min-height: auto;
-    padding: 8px 16px;
-  }
-}
 </style>
 
