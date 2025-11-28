@@ -101,6 +101,12 @@ export default defineConfig((ctx) => {
       open: true, // opens browser window automatically
     },
 
+    /*
+          open: {
+        app: { name: 'firefox' }
+      }
+    */
+
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
       config: {},
