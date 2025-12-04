@@ -1,6 +1,11 @@
 from fastapi import FastAPI
-from classes import Concept, ConceptScheme
 import json
+import sys
+sys.path.append('classes')
+from classes.concept import Concept
+
+
+
 
 app = FastAPI()
 
@@ -20,7 +25,7 @@ def write_concept(conceptString: str):
     try:
         conceptJSON = json.loads(conceptString)
         concept = Concept(**conceptJSON)
-        conceptDict[concept.concept] = conceptJSON
+        conceptDict[concept.URI] = conceptJSON
         return( {"success": "concept {concept.prefLabel} added"})
     except Exception as e:
         return {"error": str(e)}

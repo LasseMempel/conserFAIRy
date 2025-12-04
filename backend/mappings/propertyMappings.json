@@ -1,0 +1,56 @@
+{
+    "http://www.w3.org/2004/02/skos/core#Concept": "Concept",
+
+    "http://www.w3.org/2004/02/skos/core#ConceptScheme": "ConceptScheme",
+    "http://www.w3.org/2004/02/skos/core#topConceptOf" : "topConceptOf",
+    "http://www.w3.org/2004/02/skos/core#inScheme" : "inScheme",
+    "http://www.w3.org/2004/02/skos/core#hasTopConcept" : "hasTopConcept",
+
+    "http://www.w3.org/2004/02/skos/core#broadMatch" : "broadMatch",
+    "http://www.w3.org/2004/02/skos/core#narrowMatch" : "narrowMatch",
+    "http://www.w3.org/2004/02/skos/core#relatedMatch" : "relatedMatch",
+    "http://www.w3.org/2004/02/skos/core#closeMatch" : "closeMatch",
+    "http://www.w3.org/2004/02/skos/core#exactMatch" : "exactMatch",
+
+    "http://www.w3.org/2004/02/skos/core#broader" : "broader",
+    "http://www.w3.org/2004/02/skos/core#narrower" : "narrower",
+    "http://www.w3.org/2004/02/skos/core#related" : "related",
+
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : "prefLabel",
+    "http://www.w3.org/2004/02/skos/core#altLabel" : "altLabel",
+    "http://www.w3.org/2004/02/skos/core#hiddenLabel" : "hiddenLabel",
+    
+    "http://www.w3.org/2004/02/skos/core#notation" : "notation",
+
+    "http://www.w3.org/2004/02/skos/core#note" : "note",
+    "http://www.w3.org/2004/02/skos/core#changeNote" : "changeNote",
+    "http://www.w3.org/2004/02/skos/core#definition" : "definition",
+    "http://www.w3.org/2004/02/skos/core#editorialNote" : "editorialNote",
+    "http://www.w3.org/2004/02/skos/core#example" : "example",
+    "http://www.w3.org/2004/02/skos/core#historyNote" : "historyNote",
+    "http://www.w3.org/2004/02/skos/core#scopeNote" : "scopeNote",
+
+    "http://purl.org/dc/terms/creator" : "creator",
+    "http://purl.org/dc/terms/contributor" : "contributor",
+    "http://purl.org/dc/terms/publisher" : "publisher",
+    "http://purl.org/dc/terms/rights" : "rights",
+    "http://purl.org/dc/terms/source" : "source",
+    "http://purl.org/dc/terms/subject" : "subject",
+    "http://purl.org/dc/terms/created" : "created",
+    "http://purl.org/dc/terms/license" : "license",
+    "http://purl.org/dc/terms/modified" : "modified", 
+    "http://purl.org/dc/terms/title" : "title",
+    "http://purl.org/dc/terms/description" : "description",
+    
+
+    "http://purl.org/vocab/vann/preferredNamespaceUri" : "preferredNamespaceUri",
+    "https://www.w3.org/TR/rdf11-schema/#ch_seealso" : "seeAlso",
+
+    "https://schema.org/Person" : "person",
+    "https://schema.org/givenName" : "givenName",
+    "https://schema.org/worksFor" : "worksFor",
+    "https://schema.org/identifier" : "identifier",
+    "https://schema.org/email" : "email",
+    "https://schema.org/owns" : "owns",
+    "https://schema.org/memberOf" : "memberOf"
+}

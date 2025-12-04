@@ -35,17 +35,17 @@
 
     <q-footer elevated class="bg-secondary text-white">
       <q-toolbar class="column">
-        <div class="q-pt-sm row fit justify-evenly">
-          <div> 
+        <div class="q-pt-sm row full-width no-wrap">
+          <div class="q-pr-sm col-4"> 
             Leibniz-Zentrum für Archäologie (LEIZA) 2025 
           </div>
-          <q-separator color="white" vertical/>
-          <div>
+          <q-separator color="white" vertical class="col-4"/>
+          <div class="q-pl-sm col-4">
           Lasse Mempel-Länger
           </div>
         </div>
       
-        <div class="row justify-around items-center full-width" >
+        <div class="row items-center" >
           <q-avatar size="70px">
             <img src="/icons/02_Weiss_Claim_kurz.svg"/>
           </q-avatar>
