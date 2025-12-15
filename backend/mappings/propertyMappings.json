@@ -30,6 +30,9 @@
     "http://www.w3.org/2004/02/skos/core#historyNote" : "historyNote",
     "http://www.w3.org/2004/02/skos/core#scopeNote" : "scopeNote",
 
+    "http://www.w3.org/2008/05/skos-xl#prefLabel" : "XLprefLabel",
+    "http://www.w3.org/2008/05/skos-xl#altLabel" : "XLaltLabel",
+
     "http://purl.org/dc/terms/creator" : "creator",
     "http://purl.org/dc/terms/contributor" : "contributor",
     "http://purl.org/dc/terms/publisher" : "publisher",
@@ -41,16 +44,33 @@
     "http://purl.org/dc/terms/modified" : "modified", 
     "http://purl.org/dc/terms/title" : "title",
     "http://purl.org/dc/terms/description" : "description",
+    "http://purl.org/dc/terms/coverage" : "coverage",
+    "http://purl.org/dc/terms/format" : "format",
+    "http://purl.org/dc/terms/relation" : "relation",
+    "http://purl.org/dc/terms/type" : "type",
+    "http://purl.org/dc/terms/language" : "language",
+    "http://purl.org/dc/terms/isReplacedBy" : "isReplacedBy",
+    "http://purl.org/dc/terms/replaces" : "replaces",
     
-
     "http://purl.org/vocab/vann/preferredNamespaceUri" : "preferredNamespaceUri",
     "https://www.w3.org/TR/rdf11-schema/#ch_seealso" : "seeAlso",
+    "https://www.w3.org/TR/rdf11-schema/#ch_comment" : "comment",
+    "http://www.w3.org/2002/07/owl#deprecated" : "deprecated",
 
     "https://schema.org/Person" : "person",
-    "https://schema.org/givenName" : "givenName",
-    "https://schema.org/worksFor" : "worksFor",
-    "https://schema.org/identifier" : "identifier",
     "https://schema.org/email" : "email",
+    "https://schema.org/affiliation" : "affiliation",
+    "https://schema.org/name" : "name",
     "https://schema.org/owns" : "owns",
-    "https://schema.org/memberOf" : "memberOf"
+    "https://schema.org/memberOf" : "memberOf",
+    "https://schema.org/member" : "member",
+    "https://schema.org/identifier" : "identifier",
+    "https://schema.org/status" : "status",
+
+    "https://www.w3id.org/archlink/conserFAIRy/authentification" : "authentification",
+    "http://www.w3.org/ns/oa#Annotation" : "Annotation",
+    "http://www.w3.org/ns/oa#hasTarget" : "hasTarget",
+    "http://www.w3.org/ns/oa#hasBody" : "hasBody",
+    "http://www.w3.org/ns/oa#motivatedBy" : "motivatedBy"
 }
+

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    YALLO!
+    Page content yo.
   </q-page>
   
 </template>
