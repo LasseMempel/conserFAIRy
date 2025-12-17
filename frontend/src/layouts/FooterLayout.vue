@@ -3,11 +3,11 @@
     <q-footer elevated class="bg-secondary text-white">
       <q-toolbar class="column">
         <div class="q-pt-sm row full-width no-wrap">
-          <div class="q-pr-sm col-4"> 
+          <div class="q-pr-sm"> 
             Leibniz-Zentrum für Archäologie (LEIZA) 2025 
           </div>
-          <q-separator color="white" vertical class="col-4"/>
-          <div class="q-pl-sm col-4">
+          <q-separator color="white" vertical class=""/>
+          <div class="q-pl-sm">
           Lasse Mempel-Länger
           </div>
         </div>

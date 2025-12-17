@@ -30,8 +30,9 @@
     "http://www.w3.org/2004/02/skos/core#historyNote" : "historyNote",
     "http://www.w3.org/2004/02/skos/core#scopeNote" : "scopeNote",
 
-    "http://www.w3.org/2008/05/skos-xl#prefLabel" : "XLprefLabel",
-    "http://www.w3.org/2008/05/skos-xl#altLabel" : "XLaltLabel",
+    "http://www.w3.org/2008/05/skos-xl#prefLabel" : "xlPrefLabel",
+    "http://www.w3.org/2008/05/skos-xl#altLabel" : "xlAltLabel",
+    "http://www.w3.org/2008/05/skos-xl#literalForm" : "xlLiteralForm",
 
     "http://purl.org/dc/terms/creator" : "creator",
     "http://purl.org/dc/terms/contributor" : "contributor",

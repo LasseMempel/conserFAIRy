@@ -26,9 +26,11 @@ class Concept(dublinCoreObject):
     altLabel: dict[str, list[str]] | None = None
     hiddenLabel: dict[str, list[str]] | None = None
 
+    """
     # Skos XL Labels
-    XLprefLabel: list[HttpUrl] | None = None
-    XLaltLabel: list[HttpUrl] | None = None
+    xlPrefLabel: list[HttpUrl] # mandatory!
+    xlAltLabel: list[HttpUrl] | None = None
+    """
 
     # SKOS Notations
     notation: str # mandatory!

@@ -1,22 +1,29 @@
 import rdflib
+import oxrdflib
+import pyoxigraph
 
-graph = rdflib.Graph(store="Oxigraph", identifier="http://example.com") # without identifier, some blank node will be used
-graph.open("conserStore")
-#graph.parse("thesaurus.ttl", format="ttl")
-#print(graph.serialize(format="ttl"))
-print(len([(s,p,o) for s,p,o in graph]))
-graph-=graph
-print(len([(s,p,o) for s,p,o in graph]))
-graph.close()
-
-def readGraph(graph):
-    store = rdflib.Graph(store="Oxigraph")
+def readGraph():
+    """
+    store = rdflib.Graph(store="Oxigraph", identifier="https://www.w3id.org/archlink/conserFAIRy/graph")
     store.open("conserStore")
+    print(len([(s,p,o) for s,p,o in store]))
     store.close()
-    return graph
-
-def writeGraph(graph):
-    store = rdflib.Graph(store="Oxigraph")
+    """
+    store = pyoxigraph.Store.read_only("conserStore")
+    print(len(str(store)))
+    
+def writeGraph(file):
+    store = rdflib.Graph(store="Oxigraph", identifier="https://www.w3id.org/archlink/conserFAIRy/graph")
     store.open("conserStore")
-    store.parse(data=graph.serialize(format="turtle"), format="turtle")
-    graph.close()
+    store.parse(file)
+    print(len([(s,p,o) for s,p,o in store]))
+    store.close()
+
+g = rdflib.Graph()
+
+file = "data/thesaurus.ttl"
+
+writeGraph(file)
+readGraph()
+
+

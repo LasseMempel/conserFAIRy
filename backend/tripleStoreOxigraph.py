@@ -1,23 +1,20 @@
-from pyoxigraph import Store, parse, RdfFormat
+import pyoxigraph
 
-store = Store("pyoxystore")
+def readGraph():
+    store = pyoxigraph.Store.read_only("conserStore")
+    print(len(str(store)))
+    
 
-"""
-ex = NamedNode('http://example/')
-schema_name = NamedNode('http://schema.org/name')
-name = Literal('example')
-store.add(Quad(ex, schema_name, name))
-"""
+def writeGraph(graph):
+    store = pyoxigraph.Store("conserStore")
 
-graph = parse(path="thesaurus.ttl", format=RdfFormat.TURTLE)
+file = "data/thesaurus.ttl"
+g = pyoxigraph.parse(path=file)
+print(pyoxigraph.serialize(g, format="RdfFormat.TURTLE"))
 
-print(graph)
-#store.add_graph(graph)
 
-print(store)
 
-def readStore(store):
-    print(str(store))
+#writeGraph(file)
+#readGraph()
 
-def writeStore(store):
-    store.flush()
+
