@@ -1,16 +1,18 @@
-- pyoxigraph as python oxigraph wrapper for direct integration in fastapi
+conserFAIRy architecture
 
-Backend -> Frontend
-- Pydantic: Validierung und API via OpenAPI, Typescript Types, Formulare
+I Authentifizierung/User Management
+- fastapi-users
+- SQLAlchemy ORM async
+- postgresql
 
-JSON-LD
-- Serialisierung aus dem Triplestore 
-- pyld als JSON-LD processor
-- JSON Frames für Frontend kompatible Objekte?
+II Forschungsdaten
+- pyoxygraph
 
-Shacl
-- Shacle Shapes als Grundlage der Modellierung und Prozessierung
+III Validierung
+- Pydantic: Validierung und API via Typescript Types, Formulare
+- shacle shapes?
 
-
-OpenAI Schema from pydantic?
-
+IV Datenmodell
+- SKOS für Concepts
+- Ontologie für table -> graph
+- Metadatensatz (ggf. bereits in Ontologie enthalten)

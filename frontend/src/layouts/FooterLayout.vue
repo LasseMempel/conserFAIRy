@@ -1,7 +1,7 @@
 <template>
 
     <q-footer elevated class="bg-secondary text-white">
-      <q-toolbar class="column">
+      <q-toolbar class="column" v-if="router.path !== '/login'">
         <div class="q-pt-sm row full-width no-wrap">
           <div class="q-pr-sm"> 
             Leibniz-Zentrum für Archäologie (LEIZA) 2025 
@@ -37,5 +37,8 @@
 <script setup lang="ts">
 
 import ContactComponent from 'src/components/contactComponent.vue';
+import { useRoute } from 'vue-router'
+
+const router = useRoute()
 
 </script>

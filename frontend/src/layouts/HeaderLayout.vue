@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+const router = useRoute()
+
+</script>
+
 <template>
     <q-header elevated class="bg-primary text-secondary" >
       <q-toolbar> 
@@ -8,13 +15,13 @@
           </q-avatar>
         </q-toolbar-title>
       </q-toolbar>
-      <q-tabs class="text-secondary float-left">
+      <q-tabs class="text-secondary float-left" v-if="router.path !== '/login'">
         <q-route-tab to="/" label="conserDUCTION" no-caps/>
         <q-route-tab to="/conserTABLE" label="conserTABLE" no-caps/>
         <q-route-tab to="/conserGRAPH" label="conserGRAPH" no-caps/>
       </q-tabs>
-      <q-avatar class="float-right">
-        <q-btn color="accent" label="login" text-color="secondary" no-caps flat />
+      <q-avatar class="float-right" v-if="router.path !== '/login'">
+        <q-btn color="accent" label="login" text-color="secondary" to="/login" no-caps flat />
       </q-avatar>
     </q-header>
 </template>
