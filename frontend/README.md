@@ -1,6 +1,6 @@
-# conserFAIRy (conserfairy)
+# conserFAIRy (frontend)
 
-A Conservation Science FAIRification Web App
+A FAIRification framework for conservation data
 
 ## Install the dependencies
 
