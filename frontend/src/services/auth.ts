@@ -48,7 +48,13 @@ class AuthService {
   async register(data: RegisterData): Promise<UserResponse> {
     const response = await api.post<UserResponse>(
       '/auth/register',
-      data
+      {
+        email: data.email,
+        password: data.password,
+        is_active: true,
+        is_superuser: false,
+        is_verified: false
+      }
     );
     return response.data;
   }

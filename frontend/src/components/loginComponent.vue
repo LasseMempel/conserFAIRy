@@ -121,7 +121,7 @@
 </template>
 
 <script lang="ts">
-import { useQuasar } from 'quasar';
+import { Notify } from 'quasar';
 import { ref } from 'vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
@@ -132,7 +132,6 @@ export default defineComponent({
   name: 'LoginPage',
   
   setup () {
-    const $q = useQuasar();
     const router = useRouter();
     const authStore = useAuthStore();
     
@@ -151,7 +150,7 @@ export default defineComponent({
 
     const onSubmit = async (): Promise<void> => {
       if (!isLogin.value && accept.value !== true) {
-        $q.notify({
+        Notify.create({
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
@@ -161,7 +160,7 @@ export default defineComponent({
       }
 
       if (!email.value || !password.value) {
-        $q.notify({
+        Notify.create({
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
@@ -175,7 +174,7 @@ export default defineComponent({
           // Login
           await authStore.login(email.value, password.value);
           
-          $q.notify({
+          Notify.create({
             color: 'green-4',
             textColor: 'white',
             icon: 'check_circle',
@@ -187,7 +186,7 @@ export default defineComponent({
           // Register
           await authStore.register(email.value, password.value);
           
-          $q.notify({
+          Notify.create({
             color: 'green-4',
             textColor: 'white',
             icon: 'check_circle',
@@ -220,7 +219,7 @@ export default defineComponent({
           }
         }
         
-        $q.notify({
+        Notify.create({
           color: 'red-5',
           textColor: 'white',
           icon: 'error',
