@@ -25,11 +25,21 @@
           <q-input
             v-if="!isLogin"
             filled
-            v-model="name"
-            label="Your name *"
-            hint="Full name"
+            v-model="firstName"
+            label="First Name *"
+            hint="Your first name"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type your name']"
+            :rules="[ val => val && val.length > 0 || 'Please type your first name']"
+          />
+
+          <q-input
+            v-if="!isLogin"
+            filled
+            v-model="lastName"
+            label="Last Name *"
+            hint="Your last name"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Please type your last name']"
           />
 
           <q-input
@@ -136,10 +146,11 @@ export default defineComponent({
     const authStore = useAuthStore();
     
     const isLogin = ref<boolean>(true);
-    const name = ref<string | null>(null);
-    const email = ref<string | null>(null);
-    const password = ref<string | null>(null);
-    const confirmPassword = ref<string | null>(null);
+const firstName = ref<string | null>(null);
+const lastName = ref<string | null>(null);
+const email = ref<string | null>(null);
+const password = ref<string | null>(null);
+const confirmPassword = ref<string | null>(null);
     const accept = ref<boolean>(false);
     const isPwd = ref<boolean>(true);
 
@@ -178,13 +189,13 @@ export default defineComponent({
             color: 'green-4',
             textColor: 'white',
             icon: 'check_circle',
-            message: `Welcome back, ${authStore.user?.email}!`
+            message: `Welcome back, ${authStore.user?.first_name || authStore.user?.email}!`
           });
           
           await router.push('/');
         } else {
           // Register
-          await authStore.register(email.value, password.value);
+          await authStore.register(email.value, password.value, firstName.value!, lastName.value!);
           
           Notify.create({
             color: 'green-4',
@@ -230,7 +241,8 @@ export default defineComponent({
     };
 
     const onReset = (): void => {
-      name.value = null;
+      firstName.value = null;
+      lastName.value = null;
       email.value = null;
       password.value = null;
       confirmPassword.value = null;
@@ -243,7 +255,8 @@ export default defineComponent({
 
     return {
       isLogin,
-      name,
+      firstName,
+      lastName,
       email,
       password,
       confirmPassword,

@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { useAuthStore } from 'src/stores/auth';
+import { getUserInitials } from 'src/utils/userInitials';
+import { QMenu } from 'quasar';
+import { ref } from 'vue';
 
 const router = useRoute()
+const authStore = useAuthStore();
+const showUserMenu = ref(false);
 
+function handleLogout() {
+  authStore.logout();
+  //router.push('/');
+}
 </script>
 
 <template>
@@ -20,8 +30,45 @@ const router = useRoute()
         <q-route-tab to="/conserTABLE" label="conserTABLE" no-caps/>
         <q-route-tab to="/conserGRAPH" label="conserGRAPH" no-caps/>
       </q-tabs>
-      <q-avatar class="float-right" v-if="router.path !== '/login'">
-        <q-btn color="accent" label="login" text-color="secondary" to="/login" no-caps flat />
-      </q-avatar>
+      <div class="float-right" v-if="router.path !== '/login'">
+        <q-menu v-model="showUserMenu" anchor="bottom right" self="top right">
+          <q-list>
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>User:</q-item-label>
+                <q-item-label>{{ authStore.user?.first_name || authStore.user?.email }}</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable v-close-popup @click="handleLogout">
+              <q-item-section avatar>
+                <q-icon name="logout" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Logout</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+        <q-avatar 
+          v-if="authStore.isAuthenticated" 
+          class="cursor-pointer"
+          @click="showUserMenu = !showUserMenu"
+          size="36px"
+          color="accent"
+          text-color="secondary"
+        >
+          {{ getUserInitials(authStore.user?.first_name, authStore.user?.last_name) }}
+        </q-avatar>
+        <q-btn 
+          v-else 
+          color="accent" 
+          label="login" 
+          text-color="secondary" 
+          to="/login" 
+          no-caps 
+          flat 
+        />
+      </div>
     </q-header>
 </template>

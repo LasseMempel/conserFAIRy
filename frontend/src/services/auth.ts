@@ -8,6 +8,8 @@ export interface LoginCredentials {
 export interface RegisterData {
   email: string;
   password: string;
+  first_name: string;
+  last_name: string;
   is_active?: boolean;
   is_superuser?: boolean;
   is_verified?: boolean;
@@ -21,6 +23,8 @@ export interface AuthResponse {
 export interface UserResponse {
   id: string;
   email: string;
+  first_name?: string;
+  last_name?: string;
   is_active: boolean;
   is_superuser: boolean;
   is_verified: boolean;
@@ -51,6 +55,8 @@ class AuthService {
       {
         email: data.email,
         password: data.password,
+        first_name: data.first_name,
+        last_name: data.last_name,
         is_active: true,
         is_superuser: false,
         is_verified: false

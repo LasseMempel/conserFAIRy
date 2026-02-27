@@ -16,7 +16,6 @@ conda activate your_env_name
 # Export the environment
 conda env export > fastapi-env.yml
 
-
 # Activate the Environment
 conda activate your_fastapi_env_name
 

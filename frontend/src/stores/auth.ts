@@ -5,6 +5,8 @@ import authService from 'src/services/auth';
 export interface User {
   id: string;
   email: string;
+  first_name: string;
+  last_name: string;
   is_active: boolean;
   is_superuser: boolean;
   is_verified: boolean;
@@ -32,10 +34,15 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function register(email: string, password: string): Promise<void> {
+  async function register(email: string, password: string, first_name: string, last_name: string): Promise<void> {
     loading.value = true;
     try {
-      await authService.register({ email, password });
+      await authService.register({ 
+        email, 
+        password, 
+        first_name, 
+        last_name 
+      });
     } finally {
       loading.value = false;
     }
@@ -46,7 +53,12 @@ export const useAuthStore = defineStore('auth', () => {
     
     loading.value = true;
     try {
-      user.value = await authService.getCurrentUser();
+      const userData = await authService.getCurrentUser();
+      user.value = {
+        ...userData,
+        first_name: userData.first_name || '',
+        last_name: userData.last_name || ''
+      };
     } catch (error) {
       // If fetching user fails, token might be invalid
       logout();
