@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    Restaurierungsdaten.
+    Restaurierungsvokabulare.
   </q-page>
   
 </template>
