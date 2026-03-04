@@ -5,7 +5,7 @@
             v-if="!authStore.isAuthenticated"
             size="md"
             color="secondary"
-            label="Login"
+            :label="t('auth.login')"
             text-color="primary"
             to="/login"
             rounded
@@ -28,7 +28,7 @@
                     <q-btn
                         color="secondary"
                         text-color="primary"
-                        label="Logout"
+                        :label="t('auth.logout')"
                         rounded
                         size="sm"
                         v-close-popup
@@ -44,7 +44,9 @@
 import { useRoute } from 'vue-router'
 import { useAuthStore } from 'src/stores/auth';
 import { getUserInitials } from 'src/utils/userInitials';
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRoute()
 const authStore = useAuthStore();
 

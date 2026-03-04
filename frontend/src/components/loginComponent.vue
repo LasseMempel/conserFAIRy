@@ -3,7 +3,7 @@
     <q-card style="width: 400px; max-width: 90vw; max-height: 90vh; overflow-y: auto;">
       <q-card-section>
         <div class="row items-center">
-          <div class="col text-h6">{{ isLogin ? 'Login' : 'Register' }}</div>
+          <div class="col text-h6">{{ isLogin ? t('auth.login') : t('auth.register') }}</div>
           <div class="col-auto">
             <q-btn 
               flat 
@@ -26,9 +26,9 @@
             v-if="!isLogin"
             filled
             v-model="firstName"
-            label="First Name *"
+            :label="t('auth.firstName')"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type your first name']"
+            :rules="[ val => val && val.length > 0 || t('auth.firstNameHint')]"
             dense 
           />
 
@@ -36,31 +36,31 @@
             v-if="!isLogin"
             filled
             v-model="lastName"
-            label="Last Name *"
+            :label="t('auth.lastName')"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type your last name']"
+            :rules="[ val => val && val.length > 0 || t('auth.lastNameHint')]"
             dense 
           />
 
           <q-input
             filled
             v-model="email"
-            label="Email *"
+            :label="t('auth.email')"
             type="email"
             lazy-rules
-            :rules="[val => val && val.length > 0 || 'Please type your email']"
+            :rules="[val => val && val.length > 0 || t('auth.emailHint')]"
             dense 
           />
 
           <q-input
             filled
             v-model="password"
-            :label="isLogin ? 'Password *' : 'Password (min 6 characters) *'"
+            :label="t('auth.password')"
             :type="isPwd ? 'password' : 'text'"
             lazy-rules
             :rules="[
-              val => val && val.length > 0 || 'Please type your password',
-              val => val.length >= 6 || 'Password must be at least 6 characters'
+              val => val && val.length > 0 || t('auth.passwordHint'),
+              val => val.length >= 6 || t('auth.passwordLenghtHint')
             ]"
             dense 
           >
@@ -77,12 +77,12 @@
             v-if="!isLogin"
             filled
             v-model="confirmPassword"
-            label="Confirm Password *"
+            :label="t('auth.confirmPassword')"
             :type="isPwd ? 'password' : 'text'"
             lazy-rules
             :rules="[
-              val => val && val.length > 0 || 'Please confirm your password',
-              val => val === password || 'Passwords do not match'
+              val => val && val.length > 0 || t('auth.confirmPasswordHint'),
+              val => val === password || t('auth.confirmPasswordMatchHint')
             ]"
           >
             <template v-slot:append>
@@ -97,18 +97,18 @@
           <q-toggle 
             v-if="!isLogin"
             v-model="accept" 
-            label="I accept the terms and conditions" 
+            :label="t('auth.acceptTerms')" 
           />
 
           <div class="row q-gutter-sm">
             <q-btn 
-              :label="isLogin ? 'Login' : 'Register'" 
+              :label="isLogin ? t('auth.login') : t('auth.register')" 
               type="submit" 
               color="primary"
               class="col"
             />
             <q-btn
-              label="Reset"
+              :label="t('auth.reset')"
               type="reset"
               color="secondary"
               class="col"
@@ -122,13 +122,13 @@
 
       <q-card-section class="text-center">
         <div class="text-body2">
-          {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
+          {{ isLogin ? t('auth.noAccount') : t('auth.hasAccount') }}
           <a 
             href="#" 
             class="text-primary" 
             @click.prevent="toggleMode"
           >
-            {{ isLogin ? 'Register' : 'Login' }}
+            {{ isLogin ? t('auth.register') : t('auth.login') }}
           </a>
         </div>
       </q-card-section>
@@ -142,7 +142,10 @@
   import { useRouter } from 'vue-router';
   import { useAuthStore } from 'src/stores/auth';
   import { AxiosError } from 'axios';
+  import { useI18n } from 'vue-i18n'
 
+
+  const { t } = useI18n()
   const router = useRouter();
   const authStore = useAuthStore();
   
@@ -166,7 +169,7 @@
         color: 'red-5',
         textColor: 'white',
         icon: 'warning',
-        message: 'You need to accept the terms and conditions first'
+        message: t('auth.acceptTermHint')
       });
       return;
     }
@@ -176,7 +179,7 @@
         color: 'red-5',
         textColor: 'white',
         icon: 'warning',
-        message: 'Please fill in all required fields'
+        message: t('auth.missingFields')
       });
       return;
     }
@@ -190,7 +193,7 @@
           color: 'green-4',
           textColor: 'white',
           icon: 'check_circle',
-          message: `Welcome back, ${authStore.user?.first_name || authStore.user?.email}!`
+          message: `${t('auth.welcome')}, ${authStore.user?.first_name}!`
         });
         
         router.back();
@@ -202,7 +205,7 @@
           color: 'green-4',
           textColor: 'white',
           icon: 'check_circle',
-          message: 'Registration successful! Please login.'
+          message: t('auth.registrationSuccessful')
         });
         
         // Switch to login mode
