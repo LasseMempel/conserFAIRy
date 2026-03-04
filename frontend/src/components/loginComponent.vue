@@ -143,6 +143,7 @@
   import { useAuthStore } from 'src/stores/auth';
   import { AxiosError } from 'axios';
   import { useI18n } from 'vue-i18n'
+  import { parseApiError } from 'src/utils/apiError';
 
 
   const { t } = useI18n()
@@ -215,24 +216,7 @@
       }
     } catch (error: unknown) {
       console.error('Auth error:', error);
-      
-      let errorMessage = 'An error occurred';
-      
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.detail) {
-          if (typeof error.response.data.detail === 'string') {
-            errorMessage = error.response.data.detail;
-          } else {
-            errorMessage = 'Invalid credentials';
-          }
-        } else if (error.response?.status === 400) {
-          errorMessage = isLogin.value 
-            ? 'Invalid email or password' 
-            : 'Registration failed. Email may already be in use.';
-        } else if (error.response?.status === 422) {
-          errorMessage = 'Invalid input data';
-        }
-      }
+      const errorMessage = parseApiError(error, isLogin.value ? 'login' : 'register');
       
       Notify.create({
         color: 'red-5',
