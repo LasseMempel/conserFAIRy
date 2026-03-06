@@ -141,7 +141,6 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useAuthStore } from 'src/stores/auth';
-  import { AxiosError } from 'axios';
   import { useI18n } from 'vue-i18n'
   import { parseApiError } from 'src/utils/apiError';
 
