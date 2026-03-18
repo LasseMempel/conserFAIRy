@@ -3,14 +3,14 @@
     <q-card style="width: 400px; max-width: 90vw; max-height: 90vh; overflow-y: auto;">
       <q-card-section>
         <div class="row items-center">
-          <div class="col text-h6">{{ t('auth.login') }}</div>
+          <div class="col text-h6">{{ t('auth.register') }}</div>
           <div class="col-auto">
             <q-btn
               flat
               round
               dense
               icon="close"
-              @click="handleClose"
+              @click="router.push('/')"
             />
           </div>
         </div>
@@ -22,6 +22,24 @@
           @reset="onReset"
           class="q-gutter-sm"
         >
+          <q-input
+            filled
+            v-model="firstName"
+            :label="t('auth.firstName')"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || t('auth.firstNameHint')]"
+            dense
+          />
+
+          <q-input
+            filled
+            v-model="lastName"
+            :label="t('auth.lastName')"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || t('auth.lastNameHint')]"
+            dense
+          />
+
           <q-input
             filled
             v-model="email"
@@ -53,9 +71,34 @@
             </template>
           </q-input>
 
+          <q-input
+            filled
+            v-model="confirmPassword"
+            :label="t('auth.confirmPassword')"
+            :type="isPwd ? 'password' : 'text'"
+            lazy-rules
+            :rules="[
+              val => val && val.length > 0 || t('auth.confirmPasswordHint'),
+              val => val === password || t('auth.confirmPasswordMatchHint')
+            ]"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+
+          <q-toggle
+            v-model="accept"
+            :label="t('auth.acceptTerms')"
+          />
+
           <div class="row q-gutter-sm">
             <q-btn
-              :label="t('auth.login')"
+              :label="t('auth.register')"
               type="submit"
               color="primary"
               class="col"
@@ -74,9 +117,9 @@
 
       <q-card-section class="text-center">
         <div class="text-body2">
-          {{ t('auth.noAccount') }}
-          <router-link to="/register" class="text-primary">
-            {{ t('auth.register') }}
+          {{ t('auth.hasAccount') }}
+          <router-link to="/login" class="text-primary">
+            {{ t('auth.login') }}
           </router-link>
         </div>
       </q-card-section>
@@ -87,28 +130,35 @@
 <script setup lang="ts">
   import { Notify } from 'quasar';
   import { ref } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import { useAuthStore } from 'src/stores/auth';
   import { useI18n } from 'vue-i18n';
   import { parseApiError } from 'src/utils/apiError';
 
   const { t } = useI18n();
   const router = useRouter();
-  const route = useRoute();
   const authStore = useAuthStore();
 
+  const firstName = ref<string | null>(null);
+  const lastName = ref<string | null>(null);
   const email = ref<string | null>(null);
   const password = ref<string | null>(null);
+  const confirmPassword = ref<string | null>(null);
+  const accept = ref(false);
   const isPwd = ref(true);
 
-  // Navigate back to where the user came from, or fall back to /
-  const handleClose = async (): Promise<void> => {
-    const redirect = route.query.redirect as string | undefined;
-    await router.push(redirect || '/');
-  };
-
   const onSubmit = async (): Promise<void> => {
-    if (!email.value || !password.value) {
+    if (!accept.value) {
+      Notify.create({
+        color: 'red-5',
+        textColor: 'white',
+        icon: 'warning',
+        message: t('auth.acceptTermHint')
+      });
+      return;
+    }
+
+    if (!email.value || !password.value || !firstName.value || !lastName.value) {
       Notify.create({
         color: 'red-5',
         textColor: 'white',
@@ -119,21 +169,20 @@
     }
 
     try {
-      await authStore.login(email.value, password.value);
+      await authStore.register(email.value, password.value, firstName.value, lastName.value);
 
       Notify.create({
         color: 'green-4',
         textColor: 'white',
         icon: 'check_circle',
-        message: `${t('auth.welcome')}, ${authStore.user?.first_name}!`
+        message: t('auth.registrationSuccessful')
       });
 
-      // Redirect back to the page the user came from, or home
-      const redirect = route.query.redirect as string | undefined;
-      await router.push(redirect || '/');
+      // Redirect to login after successful registration
+      await router.push('/login');
     } catch (error: unknown) {
       console.error('Auth error:', error);
-      const errorMessage = parseApiError(error, 'login');
+      const errorMessage = parseApiError(error, 'register');
 
       Notify.create({
         color: 'red-5',
@@ -146,7 +195,11 @@
   };
 
   const onReset = (): void => {
+    firstName.value = null;
+    lastName.value = null;
     email.value = null;
     password.value = null;
+    confirmPassword.value = null;
+    accept.value = false;
   };
 </script>

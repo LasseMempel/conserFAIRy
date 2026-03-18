@@ -15,14 +15,15 @@ export default defineConfig({
   },
 
   test: {
-    environment: 'happy-dom',   // Lightweight DOM, faster than jsdom
-    globals: true,              // No need to import describe/it/expect in every file
+    environment: 'happy-dom',
+    globals: true,
     setupFiles: ['src/test/setup.ts'],
+    exclude: ['e2e/**', 'node_modules/**'],  // ← top level of test block
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
       include: ['src/**/*.{ts,vue}'],
-      exclude: ['src/test/**', 'src/**/*.d.ts'],
+      exclude: ['src/test/**', 'src/**/*.d.ts'],  // ← only affects coverage
     },
   },
 });

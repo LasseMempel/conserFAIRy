@@ -1,16 +1,30 @@
 from contextlib import asynccontextmanager
+import asyncio
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from alembic.config import Config
+from alembic import command
 
-from app.db import User, create_db_and_tables
+from app.db import User
 from app.schemas import UserCreate, UserRead, UserUpdate
 from app.users import auth_backend, current_active_user, fastapi_users
 
+
+def run_migrations() -> None:
+    """Run any pending Alembic migrations. Called in a thread executor
+    to avoid conflicting with the running asyncio event loop."""
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Not needed if you setup a migration system like Alembic
-    await create_db_and_tables()
+    # Run in executor so alembic's internal asyncio.run() doesn't conflict
+    # with the already-running FastAPI event loop
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(None, run_migrations)
     yield
+
 
 app = FastAPI(lifespan=lifespan)
 
@@ -46,6 +60,7 @@ app.include_router(
     prefix="/users",
     tags=["users"],
 )
+
 
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_active_user)):

@@ -79,5 +79,12 @@ export default defineConfigWithVueTs(
     },
   },
 
+  {
+    files: ['src/test/**/*.ts', 'e2e/**/*.ts'],
+    rules: {
+      '@typescript-eslint/unbound-method': 'off',
+    },
+  },
+
   prettierSkipFormatting,
 );

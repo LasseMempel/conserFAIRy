@@ -48,3 +48,20 @@ describe('parseApiError', () => {
     expect(parseApiError('something went wrong')).toBe('An error occurred');
   });
 });
+
+describe('parseApiError - fastapi-users error codes', () => {
+  it('maps LOGIN_BAD_CREDENTIALS to a friendly message', () => {
+    const error = makeAxiosError(400, { detail: 'LOGIN_BAD_CREDENTIALS' });
+    expect(parseApiError(error, 'login')).toBe('Invalid email or password');
+  });
+
+  it('maps REGISTER_USER_ALREADY_EXISTS to a friendly message', () => {
+    const error = makeAxiosError(400, { detail: 'REGISTER_USER_ALREADY_EXISTS' });
+    expect(parseApiError(error, 'register')).toBe('Registration failed. Email may already be in use.');
+  });
+
+  it('returns unknown error codes as-is', () => {
+    const error = makeAxiosError(400, { detail: 'SOME_UNKNOWN_CODE' });
+    expect(parseApiError(error)).toBe('SOME_UNKNOWN_CODE');
+  });
+});

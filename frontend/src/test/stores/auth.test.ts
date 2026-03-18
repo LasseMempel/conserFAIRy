@@ -53,9 +53,8 @@ describe('useAuthStore', () => {
 
   describe('login', () => {
     it('stores the token and fetches the user on successful login', async () => {
-      const { login, getCurrentUser } = authService;
-      vi.mocked(login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
-      vi.mocked(getCurrentUser).mockResolvedValue(mockUser);
+      vi.mocked(authService.login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
+      vi.mocked(authService.getCurrentUser).mockResolvedValue(mockUser);
 
       const store = useAuthStore();
       await store.login('test@example.com', 'password123');
@@ -66,9 +65,8 @@ describe('useAuthStore', () => {
     });
 
     it('saves the token to localStorage on login', async () => {
-      const { login, getCurrentUser } = authService;
-      vi.mocked(login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
-      vi.mocked(getCurrentUser).mockResolvedValue(mockUser);
+      vi.mocked(authService.login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
+      vi.mocked(authService.getCurrentUser).mockResolvedValue(mockUser);
 
       const store = useAuthStore();
       await store.login('test@example.com', 'password123');
@@ -77,9 +75,8 @@ describe('useAuthStore', () => {
     });
 
     it('is not loading after login completes', async () => {
-      const { login, getCurrentUser } = authService;
-      vi.mocked(login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
-      vi.mocked(getCurrentUser).mockResolvedValue(mockUser);
+      vi.mocked(authService.login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
+      vi.mocked(authService.getCurrentUser).mockResolvedValue(mockUser);
 
       const store = useAuthStore();
       await store.login('test@example.com', 'password123');
@@ -88,8 +85,7 @@ describe('useAuthStore', () => {
     });
 
     it('is not loading after login fails', async () => {
-      const { login } = authService;
-      vi.mocked(login).mockRejectedValue(new Error('bad credentials'));
+      vi.mocked(authService.login).mockRejectedValue(new Error('bad credentials'));
 
       const store = useAuthStore();
       await expect(store.login('test@example.com', 'wrong')).rejects.toThrow();
@@ -103,9 +99,8 @@ describe('useAuthStore', () => {
 
   describe('logout', () => {
     it('clears user, token and localStorage on logout', async () => {
-      const { login, getCurrentUser } = authService;
-      vi.mocked(login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
-      vi.mocked(getCurrentUser).mockResolvedValue(mockUser);
+      vi.mocked(authService.login).mockResolvedValue({ access_token: 'fake-token', token_type: 'bearer' });
+      vi.mocked(authService.getCurrentUser).mockResolvedValue(mockUser);
 
       const store = useAuthStore();
       await store.login('test@example.com', 'password123');
@@ -124,8 +119,7 @@ describe('useAuthStore', () => {
 
   describe('register', () => {
     it('calls the auth service with correct data', async () => {
-      const { register } = authService;
-      vi.mocked(register).mockResolvedValue({
+      vi.mocked(authService.register).mockResolvedValue({
         id: '456', email: 'new@example.com', first_name: 'New',
         last_name: 'User', is_active: true, is_superuser: false, is_verified: false,
       });
@@ -133,15 +127,14 @@ describe('useAuthStore', () => {
       const store = useAuthStore();
       await store.register('new@example.com', 'password123', 'New', 'User');
 
-      expect(register).toHaveBeenCalledWith({
+      expect(authService.register).toHaveBeenCalledWith({
         email: 'new@example.com', password: 'password123',
         first_name: 'New', last_name: 'User',
       });
     });
 
     it('is not loading after register completes', async () => {
-      const { register } = authService;
-      vi.mocked(register).mockResolvedValue({
+      vi.mocked(authService.register).mockResolvedValue({
         id: '456', email: 'new@example.com', first_name: 'New',
         last_name: 'User', is_active: true, is_superuser: false, is_verified: false,
       });
@@ -159,16 +152,14 @@ describe('useAuthStore', () => {
 
   describe('fetchUser', () => {
     it('does nothing if there is no token', async () => {
-      const { getCurrentUser } = authService;
       const store = useAuthStore();
       await store.fetchUser();
-      expect(getCurrentUser).not.toHaveBeenCalled();
+      expect(authService.getCurrentUser).not.toHaveBeenCalled();
     });
 
     it('logs out if fetching the user fails (invalid token)', async () => {
       localStorage.setItem('token', 'stale-token');
-      const { getCurrentUser } = authService;
-      vi.mocked(getCurrentUser).mockRejectedValue(new Error('401'));
+      vi.mocked(authService.getCurrentUser).mockRejectedValue(new Error('401'));
 
       const store = useAuthStore();
       store.token = 'stale-token';
