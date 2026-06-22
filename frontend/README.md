@@ -1,43 +1,21 @@
-# conserFAIRy (conserfairy)
+# React + TypeScript + Vite + shadcn/ui
 
-A Conservation Science FAIRification Web App
+This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
 
-## Install the dependencies
+## Adding components
 
-```bash
-yarn
-# or
-npm install
-```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+To add components to your app, run the following command:
 
 ```bash
-quasar dev
+npx shadcn@latest add button
 ```
 
-### Lint the files
+This will place the ui components in the `src/components` directory.
 
-```bash
-yarn lint
-# or
-npm run lint
+## Using components
+
+To use the components in your app, import them as follows:
+
+```tsx
+import { Button } from "@/components/ui/button"
 ```
-
-### Format the files
-
-```bash
-yarn format
-# or
-npm run format
-```
-
-### Build the app for production
-
-```bash
-quasar build
-```
-
-### Customize the configuration
-
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
