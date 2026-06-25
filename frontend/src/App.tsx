@@ -5,19 +5,38 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { DataCard } from "@/components/data-card"
 
 export const iframeHeight = "800px"
 
 export const description = "A sidebar with a header and a search form."
 
 export function App() {
+  const cardData = [
+    {
+      title: "Card 1",
+      description: "First card content",
+      content: <p>Card content goes here.</p>,
+    },
+    {
+      title: "Card 2",
+      description: "Second card content",
+      content: <p>Card content goes here.</p>,
+    },
+    {
+      title: "Card 3",
+      description: "Third card content",
+      content: <p>Card content goes here.</p>,
+    },
+  ]
+
+  const mainCardData = {
+    title: "Main Content",
+    description: "Primary content area",
+    content: <p>Main content goes here.</p>,
+    className: "md:min-h-min",
+  }
+
   return (
     <TooltipProvider>
       <div className="[--header-height:calc(--spacing(14))]">
@@ -28,43 +47,21 @@ export function App() {
             <SidebarInset>
               <div className="flex flex-1 flex-col gap-4 p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Card 1</CardTitle>
-                      <CardDescription>First card content</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p>Card content goes here.</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Card 2</CardTitle>
-                      <CardDescription>Second card content</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p>Card content goes here.</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Card 3</CardTitle>
-                      <CardDescription>Third card content</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p>Card content goes here.</p>
-                    </CardContent>
-                  </Card>
+                  {cardData.map((card, index) => (
+                    <DataCard
+                      key={index}
+                      title={card.title}
+                      description={card.description}
+                      content={card.content}
+                    />
+                  ))}
                 </div>
-                <Card className="md:min-h-min">
-                  <CardHeader>
-                    <CardTitle>Main Content</CardTitle>
-                    <CardDescription>Primary content area</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Main content goes here.</p>
-                  </CardContent>
-                </Card>
+                <DataCard
+                  title={mainCardData.title}
+                  description={mainCardData.description}
+                  content={mainCardData.content}
+                  className={mainCardData.className}
+                />
               </div>
             </SidebarInset>
           </div>
