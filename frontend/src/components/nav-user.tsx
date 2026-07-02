@@ -27,6 +27,7 @@ export function NavUser({
     name: string
     email: string
     avatar: string
+    login: boolean
   }
 }) {
   const { isMobile } = useSidebar()
@@ -99,7 +100,7 @@ export function NavUser({
             <DropdownMenuItem>
               <LogOutIcon
               />
-              Log out
+              { user.login ? "Log out" : "Log in" }
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

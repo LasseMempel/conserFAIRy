@@ -21,6 +21,7 @@ const data = {
     name: "Lasse Mempel-Länger",
     email: "0009-0001-5183-1635", // ORCID ID/ ORCID URI?
     avatar: "/avatars/shadcn.jpg",
+    login: true
   },
   navMain: [
     {
