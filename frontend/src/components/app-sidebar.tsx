@@ -17,12 +17,6 @@ import { Settings2Icon, LifeBuoyIcon, SendIcon, FrameIcon, PieChartIcon, MapIcon
 import logo from "@/assets/FAIRification_Tool.png"
 
 const data = {
-  user: {
-    name: "Lasse Mempel-Länger",
-    email: "0009-0001-5183-1635", // ORCID ID/ ORCID URI?
-    avatar: "/avatars/shadcn.jpg",
-    login: true
-  },
   navMain: [
     {
       title: "Terminologien",
@@ -197,7 +191,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   )

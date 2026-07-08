@@ -1,3 +1,4 @@
+import { Routes, Route } from "react-router-dom"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import {
@@ -6,6 +7,8 @@ import {
 } from "@/components/ui/sidebar"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DataCard } from "@/components/data-card"
+import { AuthErrorPage } from "@/pages/auth-error"
+import { AuthCallbackPage } from "@/pages/auth-callback"
 
 export const iframeHeight = "800px"
 
@@ -39,34 +42,44 @@ export function App() {
 
   return (
     <TooltipProvider>
-      <div className="[--header-height:calc(--spacing(14))]">
-        <SidebarProvider className="flex flex-col">
-          <SiteHeader />
-          <div className="flex flex-1">
-            <AppSidebar />
-            <SidebarInset>
-              <div className="flex flex-1 flex-col gap-4 p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                  {cardData.map((card, index) => (
+      <Routes>
+        {/* Auth callback page - handles successful OAuth redirect */}
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
+        {/* Auth error page - full screen, no sidebar */}
+        <Route path="/auth/error" element={<AuthErrorPage />} />
+        
+        {/* Main app layout with sidebar */}
+        <Route path="/*" element={
+          <div className="[--header-height:calc(--spacing(14))]">
+            <SidebarProvider className="flex flex-col">
+              <SiteHeader />
+              <div className="flex flex-1">
+                <AppSidebar />
+                <SidebarInset>
+                  <div className="flex flex-1 flex-col gap-4 p-4">
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                      {cardData.map((card, index) => (
+                        <DataCard
+                          key={index}
+                          title={card.title}
+                          description={card.description}
+                          content={card.content}
+                        />
+                      ))}
+                    </div>
                     <DataCard
-                      key={index}
-                      title={card.title}
-                      description={card.description}
-                      content={card.content}
+                      title={mainCardData.title}
+                      description={mainCardData.description}
+                      content={mainCardData.content}
+                      className={mainCardData.className}
                     />
-                  ))}
-                </div>
-                <DataCard
-                  title={mainCardData.title}
-                  description={mainCardData.description}
-                  content={mainCardData.content}
-                  className={mainCardData.className}
-                />
+                  </div>
+                </SidebarInset>
               </div>
-            </SidebarInset>
+            </SidebarProvider>
           </div>
-        </SidebarProvider>
-      </div>
+        } />
+      </Routes>
     </TooltipProvider>
   )
 }
