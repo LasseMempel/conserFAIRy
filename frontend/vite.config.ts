@@ -11,4 +11,21 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    host: "127.0.0.1",
+    proxy: {
+      // Proxy all /_allauth requests to Django backend
+      "/_allauth": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+        secure: false,
+      },
+      // Proxy /accounts for OAuth callbacks
+      "/accounts": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })

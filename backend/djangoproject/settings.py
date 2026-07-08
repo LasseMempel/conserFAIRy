@@ -10,10 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import environ
 from pathlib import Path
+
+# Initialize environment variables
+env = environ.Env(
+    DEBUG=(bool, False),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load .env file
+environ.Env.read_env(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +36,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,19 +45,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
-    # Required
+    # CORS
+    'corsheaders',
+
+    # allauth
     'allauth',
     'allauth.account',
-    'allauth.headless',
-
-    # Optional
     'allauth.socialaccount',
-    #'allauth.mfa',
+    'allauth.socialaccount.providers.orcid',
+    'allauth.headless',
     'allauth.usersessions',
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,7 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'djangoproject.urls'
@@ -127,12 +140,82 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-"""
-# Do i need these?
-# These are the URLs to be implemented by your single-page application.
+# CORS Configuration
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5173",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "x-csrftoken",
+    "origin",
+]
+
+# CSRF Configuration
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:5173",
+]
+
+# CSRF Cookie Settings for development with Vite proxy
+# The proxy makes requests appear same-origin, but cookies need proper settings
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+
+# allauth Configuration
+AUTHENTICATION_BACKENDS = [
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False
+SOCIALACCOUNT_ONLY = True
+ACCOUNT_SIGNUP_FIELDS = ["email*"]
+
+# Headless mode configuration
+HEADLESS_ONLY = True
 HEADLESS_FRONTEND_URLS = {
-    "account_confirm_email": "https://app.project.org/account/verify-email/{key}",
-    "account_reset_password_from_key": "https://app.org/account/password/reset/key/{key}",
-    "account_signup": "https://app.org/account/signup",
+    "account_confirm_email": "http://127.0.0.1:5173/auth/verify-email/{key}",
+    "account_reset_password": "http://127.0.0.1:5173/auth/password/reset",
+    "account_reset_password_from_key": "http://127.0.0.1:5173/auth/password/reset/key/{key}",
+    "account_signup": "http://127.0.0.1:5173/auth/signup",
+    "socialaccount_login_error": "http://127.0.0.1:5173/auth/error",
+    "socialaccount_login_callback": "http://127.0.0.1:5173/auth/callback",
 }
-"""
+HEADLESS_SERVE_SPECIFICATION = True
+
+# ORCID Social Account Provider Configuration
+SOCIALACCOUNT_PROVIDERS = {
+    "orcid": {
+        "BASE_DOMAIN": "sandbox.orcid.org",
+        "MEMBER_API": True,  # set True if you registered for the sandbox Member API, not Public API
+        "SCOPE": ["/authenticate", "/read-limited"],
+        "APPS": [
+            {
+                "client_id": env("ORCID_CLIENT_ID", default=""),
+                "secret": env("ORCID_CLIENT_SECRET", default=""),
+            }
+        ],
+    }
+}
+
+# temporary logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "root": {"handlers": ["console"], "level": "WARNING"},
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
+        "allauth": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
+    },
+}
+
+# temporary debug adapter for social login
+SOCIALACCOUNT_ADAPTER = "djangoproject.adapters.DebugSocialAccountAdapter"
+
