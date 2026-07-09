@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 
 interface AuthError {
   message: string
@@ -28,25 +31,24 @@ export function AuthErrorPage() {
   }, [searchParams])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
-        <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-red-600">
-            Authentication Error
-          </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            {error?.message}
-          </p>
-        </div>
-        <div className="flex justify-center">
-          <Link
-            to="/"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Return to Application
-          </Link>
-        </div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Authentication Error</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <AlertDescription>
+              {error?.message}
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+        <CardFooter>
+          <Button asChild>
+            <Link to="/">Return to Application</Link>
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }

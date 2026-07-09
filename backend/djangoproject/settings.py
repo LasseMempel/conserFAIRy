@@ -204,7 +204,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# temporary logging
+"""
+# temporary logging to check user authentification flow and social login
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -218,4 +219,4 @@ LOGGING = {
 
 # temporary debug adapter for social login
 SOCIALACCOUNT_ADAPTER = "djangoproject.adapters.DebugSocialAccountAdapter"
-
+"""
