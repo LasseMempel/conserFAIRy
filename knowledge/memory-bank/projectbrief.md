@@ -5,5 +5,5 @@ ConserFAIRy is a digital conservation science webapp for conservation documentat
 
 ## Top-Level Navigation
 1. **Records:** Documentation (full structured metadata, metadata headers, unstructured attachments).
-2. **Vocabularies:** SKOS vocabulary management (including the metadata terminology itself).
+2. **Vocabularies:** SKOS vocabulary management.
 3. **Graph Query:** Querying/visualizing the Oxigraph projection.

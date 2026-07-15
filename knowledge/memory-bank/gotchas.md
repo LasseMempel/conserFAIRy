@@ -8,6 +8,9 @@
 ## React / Frontend
 - **@rjsf/core Styling:** `@rjsf/core` default widgets don't match `shadcn/ui`. You MUST use the `@rjsf/shadcn` theme (or write custom widgets that wrap shadcn components). Do not mix raw HTML inputs with shadcn components in the form renderer.
 - **Schema Versioning:** The form renderer must accept the specific JSON Schema version the record was created with, not just the "latest" schema from the `schemas/` folder.
+- **shadcn Component Discovery:** Always check `/frontend/src/components` and `/frontend/src/components/ui` for existing shadcn components before creating new ones. Install new shadcn components if needed via `npx shadcn@latest add <component>`.
+- **Color Scheme:** Always use CSS variables from `/frontend/src/index.css`. Never hardcode hex values. Extend the theme if new colors are needed.
+- **Component Structure:** Routes in `App.tsx`, layouts in `/layouts`, pages in `/pages`, components in `/components`. Build small, reusable, nested components.
 
 ## ORCID OAuth Authentication
 - **Origin Mismatch (localhost vs 127.0.0.1):** Browsers treat `localhost` and `127.0.0.1` as different origins with separate cookie jars. **Fix**: Standardize entire stack on `127.0.0.1`:
@@ -24,3 +27,7 @@
 - **allauth Adapter Method Name:** allauth 65.18.0 renamed `authentication_error` to `on_authentication_error`. **Fix**: In `adapters.py`, use `on_authentication_error()` method name.
 
 - **Logout Endpoint Method:** allauth headless uses `DELETE /auth/session` to terminate the session, not `POST /auth/logout`. **Fix**: In `auth-client.ts`, `logout()` performs `DELETE /auth/session`.
+
+- **HTTP Error Handling:** `fetch()` does NOT throw on HTTP error codes (400, 409, etc.) — only on network failures. The caller must check `response.ok` and `response.status` explicitly. **Fix**: In `auth-callback.tsx`, check `signupResponse.ok` before parsing JSON.
+
+- **ORCID Email Visibility:** Users with private email addresses in ORCID get `orcid_email_missing` error. They must set email visibility to "Everyone" or "Trusted parties" in ORCID settings (Account Settings → Emails). The error page provides this guidance.

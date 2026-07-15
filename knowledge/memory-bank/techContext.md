@@ -24,6 +24,8 @@
 - ajv (Validation)
 - React Flow + dagre (Graph visualization)
 - vitest + React Testing Library
+- TanStackQuery
+- react-router-dom
 
 ### allauth headless client (`auth-client.ts`)
 - `getSession()` - Returns `{ user, isAuthenticated }` from `result.data.user` and `result.meta.is_authenticated`
